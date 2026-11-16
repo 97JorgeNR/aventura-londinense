@@ -91,7 +91,7 @@ button:disabled{opacity:.4}
 </div>
 <script>
 /* CONFIGURACIÓN: sustituye el texto entre comillas por vuestro PIN de seis cifras. */
-const PIN="CAMBIAR_POR_VUESTRO_PIN";
+const PIN="301226";
 const activities=[
 {id:"salida",time:"03:30",start:"2026-12-30T03:30:00Z",title:"Salida de San Juan de Vilatorrada",emoji:"🚗",short:"Comienza nuestra aventura rumbo al aeropuerto.",desc:"Salida aproximada entre las 03:30 y las 03:45 desde San Juan de Vilatorrada.",directions:["Revisad que lleváis documentación y equipaje.","Destino: PimpamParking."]},
 {id:"parking",time:"04:40",start:"2026-12-30T04:40:00Z",title:"PimpamParking",emoji:"🅿️",short:"Dejamos el coche y nos dirigimos al aeropuerto.",desc:"Llegada prevista a PimpamParking sobre las 04:40.",directions:["Seguid las indicaciones de la reserva del aparcamiento.","Preparad el traslado a la terminal."]},
@@ -140,7 +140,7 @@ $("m1").addEventListener("click",()=>{$("missionText").textContent="¡NO SOY COB
 $("m2").addEventListener("click",()=>{$("missionText").innerHTML="<strong>Ruta:</strong> Chinatown → Leicester Square → Piccadilly Circus → Regent Street → Carnaby Street → Soho. ¡A disfrutar de Londres!";});
 $("enter").addEventListener("click",()=>{
  const v=$("pin").value;
- if(PIN==="301226"){ $("error").textContent="Falta configurar el PIN en el archivo de la aplicación.";return;}
+ if(PIN==="CAMBIAR_POR_VUESTRO_PIN"){ $("error").textContent="Falta configurar el PIN en el archivo de la aplicación.";return;}
  if(v===PIN){$("login").classList.add("hidden");$("app").classList.remove("hidden");sessionStorage.setItem("aventura_ok","1");render();}
  else $("error").textContent="El código no es correcto. Probad otra vez.";
 });
