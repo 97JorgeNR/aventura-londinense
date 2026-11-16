@@ -116,7 +116,7 @@ const expiry=t=>new Date(t).getTime()+14400000;
 let current=null;
 function londonNow(){return Date.now();} // Los horarios están guardados en UTC: Londres está en GMT el 30/12/2026.
 function render(){
- const now=londonNow(), list=activities.filter(a=>now>=unlock(a.start)&&now<expiry(a.start));
+ const now=londonNow(), list=activities.filter(a=>(["salida","parking","flight","gatwick","passport"].includes(a.id)||now>=unlock(a.start))&&now<expiry(a.start));
  $("activities").innerHTML="";
  list.forEach(a=>{
   const el=document.createElement("article");el.className="activity";
