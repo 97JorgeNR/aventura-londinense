@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#101d2b">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Aventura Londres">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>Aventura Londinense</title>
+<style>
+:root{--fondo:#101d2b;--tarjeta:#1b3043;--dorado:#d8c39a;--texto:#f5f1e9;--suave:#bdc8d2;--linea:#395064}
+*{box-sizing:border-box}body{margin:0;background:var(--fondo);color:var(--texto);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100vh}
+.serif,h1,h2,.hora{font-family:Georgia,"Times New Roman",serif}
+.wrap{max-width:760px;margin:auto;padding:24px 18px 60px}
+header{text-align:center;padding:28px 8px 22px;border-bottom:1px solid var(--linea)}
+.kicker{font-size:11px;letter-spacing:2.4px;color:var(--dorado);text-transform:uppercase}
+h1{font-size:clamp(30px,8vw,46px);font-weight:400;letter-spacing:1px;margin:10px 0;color:var(--dorado)}
+.sub{font-size:11px;letter-spacing:1.4px;color:var(--suave);line-height:1.8}
+.panel{background:var(--tarjeta);border:1px solid var(--linea);border-radius:18px;padding:22px;margin:22px 0;box-shadow:0 10px 28px #0002}
+.center{text-align:center}.intro{color:var(--suave);line-height:1.65}
+input{width:100%;padding:15px;border:1px solid #64788a;border-radius:10px;background:#102131;color:white;font-size:20px;letter-spacing:8px;text-align:center;margin:12px 0}
+button{border:1px solid var(--dorado);background:var(--dorado);color:#172535;padding:13px 18px;border-radius:9px;font-weight:700;letter-spacing:1px;cursor:pointer}
+button.secondary{background:transparent;color:var(--dorado)}
+button:disabled{opacity:.4}
+.hidden{display:none!important}.gold{color:var(--dorado)}
+.banner{padding:14px;text-align:center;border:1px solid var(--dorado);border-radius:12px;color:var(--dorado);font-weight:700;letter-spacing:1px;margin:20px 0;animation:pulse 1.8s infinite}
+@keyframes pulse{50%{box-shadow:0 0 18px #d8c39a44}}
+.grid{display:grid;grid-template-columns:1fr;gap:13px}
+.activity{display:flex;gap:14px;align-items:stretch;background:var(--tarjeta);border:1px solid var(--linea);border-radius:15px;overflow:hidden;cursor:pointer}
+.art{width:106px;min-width:106px;display:flex;align-items:center;justify-content:center;background:linear-gradient(145deg,#29445a,#152637);font-size:38px;color:var(--dorado)}
+.info{padding:14px 14px 14px 0;align-self:center;min-width:0}
+.time{font-size:11px;letter-spacing:1.3px;color:var(--dorado);margin-bottom:5px}
+.info h3{font-family:Georgia,serif;font-size:19px;font-weight:400;margin:0 0 5px}
+.info p{font-size:13px;color:var(--suave);margin:0;line-height:1.45}
+.section-title{font-family:Georgia,serif;font-weight:400;color:var(--dorado);font-size:24px;margin:28px 0 13px}
+.detail-top{display:flex;align-items:center;gap:12px}.detail-emoji{font-size:42px}
+.detail p{line-height:1.65;color:var(--suave)}
+.route{padding-left:20px;border-left:1px solid var(--dorado);margin:18px 0}
+.route div{margin:0 0 15px;position:relative}.route div:before{content:"";position:absolute;left:-25px;top:5px;width:9px;height:9px;border-radius:50%;background:var(--dorado)}
+.small{font-size:12px;color:var(--suave)}.footer{text-align:center;color:#81909d;font-size:11px;margin-top:35px}
+.mission-buttons{display:grid;grid-template-columns:1fr;gap:10px}
+.note{font-size:12px;color:var(--suave);line-height:1.5}
+@media(min-width:600px){.grid{grid-template-columns:1fr 1fr}.activity{min-height:112px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+<div class="kicker">30 diciembre 2026 · Londres</div>
+<h1>AVENTURA LONDINENSE</h1>
+<div class="sub">UNA EXPERIENCIA PRIVADA<br>YOLANDA · MARC · CRISTINA · JORGE</div>
+</header>
+<section id="login" class="panel center">
+<div class="gold kicker">Una aventura os espera...</div>
+<h2 style="font-weight:400">¿Preparados para descubrir Londres?</h2>
+<p class="intro">Introducid vuestro código para entrar en la aventura.</p>
+<input id="pin" type="password" inputmode="numeric" maxlength="6" autocomplete="off" placeholder="••••••">
+<button id="enter">DESCUBRIR LA AVENTURA</button>
+<p id="error" class="small" style="color:#f0a7a7"></p>
+</section>
+<main id="app" class="hidden">
+<div class="panel center">
+<div class="gold kicker">Yolanda · Marc · Cristina · Jorge</div>
+<h2 style="font-weight:400;margin:8px 0">¡Londres nos espera!</h2>
+<p class="intro">Cada etapa se irá desbloqueando a medida que avance el día. Tocad una tarjeta para descubrir sus detalles.</p>
+<div class="small">La aplicación está preparada para funcionar sin conexión una vez instalada y abierta con internet.</div>
+</div>
+<div id="announcement" class="banner hidden">✦ ¡NUEVA MISIÓN DESBLOQUEADA! ✦</div>
+<h2 class="section-title">Nuestro viaje</h2>
+<div id="activities" class="grid"></div>
+<div id="missions" class="hidden">
+<h2 class="section-title">La misión de la tarde</h2>
+<div class="panel">
+<p class="intro">Ha llegado el momento de elegir cómo continúa la aventura.</p>
+<div class="mission-buttons">
+<button class="secondary" id="m1">MISIÓN 1</button>
+<button id="m2">MISIÓN 2 · RUTA POR EL WEST END</button>
+</div>
+<p class="note" id="missionText"></p>
+</div>
+</div>
+<section id="detail" class="panel detail hidden">
+<button class="secondary" id="back">← VOLVER A LAS ACTIVIDADES</button>
+<div id="detailContent"></div>
+</section>
+</main>
+<div class="footer">AVENTURA LONDINENSE · 30·12·2026</div>
+</div>
+<script>
+/* CONFIGURACIÓN: sustituye el texto entre comillas por vuestro PIN de seis cifras. */
+const PIN="CAMBIAR_POR_VUESTRO_PIN";
+const activities=[
+{id:"salida",time:"03:30",start:"2026-12-30T03:30:00Z",title:"Salida de San Juan de Vilatorrada",emoji:"🚗",short:"Comienza nuestra aventura rumbo al aeropuerto.",desc:"Salida aproximada entre las 03:30 y las 03:45 desde San Juan de Vilatorrada.",directions:["Revisad que lleváis documentación y equipaje.","Destino: PimpamParking."]},
+{id:"parking",time:"04:40",start:"2026-12-30T04:40:00Z",title:"PimpamParking",emoji:"🅿️",short:"Dejamos el coche y nos dirigimos al aeropuerto.",desc:"Llegada prevista a PimpamParking sobre las 04:40.",directions:["Seguid las indicaciones de la reserva del aparcamiento.","Preparad el traslado a la terminal."]},
+{id:"flight",time:"06:25",start:"2026-12-30T06:25:00Z",title:"Vuelo a Londres",emoji:"✈️",short:"Barcelona · Londres Gatwick · 2 h 25 min.",desc:"El vuelo sale de Barcelona a las 06:25. Duración aproximada: 2 horas y 25 minutos.",directions:["Tened a mano la documentación de viaje.","¡Empieza la aventura londinense!"]},
+{id:"gatwick",time:"07:50",start:"2026-12-30T07:50:00Z",title:"Llegada a Gatwick",emoji:"🇬🇧",short:"Aterrizaje previsto entre las 07:50 y las 08:00.",desc:"Llegada al aeropuerto de Londres Gatwick. Hay que avanzar con agilidad para enlazar con los trenes.",directions:["Seguid las señales de llegadas y trenes.","No os entretengáis: el margen es ajustado."]},
+{id:"passport",time:"08:00",start:"2026-12-30T08:00:00Z",title:"Control de pasaportes",emoji:"🛂",short:"Pasar el control y salir hacia la estación.",desc:"Entre las 08:00 y las 08:30 calculamos el control de pasaportes y la salida de llegadas.",directions:["Tened los pasaportes preparados.","Al salir, seguid las señales hacia la estación de tren."]},
+{id:"train",time:"08:30",start:"2026-12-30T08:30:00Z",title:"Tren hacia el centro",emoji:"🚆",short:"Conexión ferroviaria hacia Charing Cross.",desc:"Tras salir del control, toca enlazar con los trenes hacia el centro de Londres.",directions:["Comprobad en los paneles la conexión adecuada.","El objetivo es llegar a Charing Cross sobre las 09:15–09:30."]},
+{id:"charing",time:"09:15",start:"2026-12-30T09:15:00Z",title:"Llegada a Charing Cross",emoji:"🚉",short:"Llegada prevista entre las 09:15 y las 09:30.",desc:"Una vez en Charing Cross, nos organizamos para dejar las mochilas antes de los tours.",directions:["Localizad el punto de consigna Radical Storage elegido.","Dejad las mochilas y dirigíos al punto de encuentro de los tours."]},
+{id:"bags",time:"09:30",start:"2026-12-30T09:30:00Z",title:"Dejar las mochilas",emoji:"🎒",short:"Dejamos el equipaje en Radical Storage.",desc:"Antes de las visitas guiadas, dejamos las mochilas en Radical Storage para movernos cómodamente.",directions:["Usad la dirección y las instrucciones de la reserva que tengáis guardadas.","Comprobad que todos lleváis lo imprescindible."]},
+{id:"classic",time:"10:00",start:"2026-12-30T10:00:00Z",title:"Tour clásico de Londres",emoji:"🏛️",short:"Yolanda y Marc · 10:00–13:00 · 3 horas.",desc:"Visita guiada clásica por Londres para descubrir sus lugares más emblemáticos. El otro equipo hará el tour de Harry Potter; las dos actividades aparecen aquí para todos.",directions:["Yolanda y Marc realizan este tour.","Duración prevista: 3 horas.","Reencuentro de los cuatro a las 13:00 delante de Westminster Abbey."]},
+{id:"potter",time:"10:00",start:"2026-12-30T10:00:00Z",title:"Tour de Harry Potter",emoji:"🪄",short:"Cristina y Jorge · 10:00–12:30 · 2 h 30 min.",desc:"Un recorrido por rincones londinenses relacionados con el mundo de Harry Potter. El otro equipo hará el tour clásico; las dos actividades aparecen aquí para todos.",directions:["Cristina y Jorge realizan este tour.","Duración prevista: 2 horas y 30 minutos.","Reencuentro de los cuatro a las 13:00 delante de Westminster Abbey."]},
+{id:"reunion",time:"13:00",start:"2026-12-30T13:00:00Z",title:"¡Nos reunimos!",emoji:"🤗",short:"Los cuatro delante de Westminster Abbey.",desc:"Fin de los tours y momento de volver a estar todos juntos.",directions:["Punto de encuentro: delante de Westminster Abbey.","Esperad a que estén los cuatro antes de continuar."]},
+{id:"rest",time:"13:00",start:"2026-12-30T13:00:00Z",title:"Pausa en el apartamento",emoji:"🏡",short:"13:00–14:30 · Descanso y recarga de energía.",desc:"Un rato para descansar, dejar cosas y prepararnos para la visita de la tarde.",directions:["Tiempo previsto hasta las 14:30.","Preparad la salida hacia el museo."]},
+{id:"museum",time:"15:15",start:"2026-12-30T15:15:00Z",title:"Natural History Museum",emoji:"🦖",short:"15:15–17:50 · Tarde en el museo.",desc:"Visitamos el espectacular Natural History Museum. Disfrutad de sus salas, colecciones y arquitectura.",directions:["Llegada prevista a las 15:15.","Tiempo de visita hasta aproximadamente las 17:50.","A las 18:00 se desbloquea la misión de la tarde."]},
+{id:"mission",time:"18:00",start:"2026-12-30T18:00:00Z",title:"La misión del West End",emoji:"🗺️",short:"Elige la misión y recorre el corazón de Londres.",desc:"Dos opciones para continuar la aventura. La primera es una pequeña trampa: ¡en realidad os anima a hacer la segunda!",directions:["La misión se desbloquea a las 17:00.","Las dos opciones estarán disponibles hasta las 22:00."]},
+{id:"pub",time:"20:00",start:"2026-12-30T20:00:00Z",title:"The Dog and Duck",emoji:"🍻",short:"Parada prevista sobre las 20:00.",desc:"Una parada para disfrutar del ambiente de un pub londinense tradicional.",directions:["The Dog and Duck, en Soho.","Hora aproximada: 20:00."]},
+{id:"pizza",time:"21:00",start:"2026-12-30T21:00:00Z",title:"ICCO Pizza",emoji:"🍕",short:"Cena prevista sobre las 21:00.",desc:"Terminamos el día con pizza en ICCO Pizza.",directions:["ICCO Pizza.","Hora aproximada: 21:00. ¡Buen provecho!"]}
+];
+const $=id=>document.getElementById(id);
+const unlock=t=>new Date(t).getTime()-3600000;
+const expiry=t=>new Date(t).getTime()+14400000;
+let current=null;
+function londonNow(){return Date.now();} // Los horarios están guardados en UTC: Londres está en GMT el 30/12/2026.
+function render(){
+ const now=londonNow(), list=activities.filter(a=>now>=unlock(a.start)&&now<expiry(a.start));
+ $("activities").innerHTML="";
+ list.forEach(a=>{
+  const el=document.createElement("article");el.className="activity";
+  el.innerHTML=`<div class="art">${a.emoji}</div><div class="info"><div class="time">${a.time} · LONDRES</div><h3>${a.title}</h3><p>${a.short}</p></div>`;
+  el.addEventListener("click",()=>showDetail(a));$("activities").appendChild(el);
+ });
+ const mission=activities.find(a=>a.id==="mission");
+ $("missions").classList.toggle("hidden",!(now>=unlock(mission.start)&&now<expiry(mission.start)));
+ if(!list.length){$("activities").innerHTML='<div class="panel"><p class="intro">Todavía no hay actividades desbloqueadas. La próxima aparecerá automáticamente cuando llegue su hora.</p></div>';}
+ const newly=list.filter(a=>!sessionStorage.getItem("seen_"+a.id));
+ if(newly.length){$("announcement").classList.remove("hidden");newly.forEach(a=>sessionStorage.setItem("seen_"+a.id,"1"));}
+ else $("announcement").classList.add("hidden");
+}
+function showDetail(a){
+ current=a;$("activities").classList.add("hidden");$("missions").classList.add("hidden");$("announcement").classList.add("hidden");
+ $("detail").classList.remove("hidden");
+ $("detailContent").innerHTML=`<div class="detail-top"><div class="detail-emoji">${a.emoji}</div><div><div class="time">${a.time} · LONDRES</div><h2 style="font-weight:400;margin:4px 0">${a.title}</h2></div></div><p>${a.desc}</p><h3 class="gold" style="font-family:Georgia,serif;font-weight:400">Indicaciones</h3><div class="route">${a.directions.map(x=>`<div>${x}</div>`).join("")}</div><p class="note">Las indicaciones se guardan en esta aplicación y pueden consultarse sin conexión. Para mapas en directo o navegación paso a paso sí necesitaréis conexión.</p>`;
+}
+$("back").addEventListener("click",()=>{$("detail").classList.add("hidden");$("activities").classList.remove("hidden");render();});
+$("m1").addEventListener("click",()=>{$("missionText").textContent="¡NO SOY COBARDE Y HAGO LA MISIÓN 2! 😄 ¡Vamos allá!";});
+$("m2").addEventListener("click",()=>{$("missionText").innerHTML="<strong>Ruta:</strong> Chinatown → Leicester Square → Piccadilly Circus → Regent Street → Carnaby Street → Soho. ¡A disfrutar de Londres!";});
+$("enter").addEventListener("click",()=>{
+ const v=$("pin").value;
+ if(PIN==="CAMBIAR_POR_VUESTRO_PIN"){ $("error").textContent="Falta configurar el PIN en el archivo de la aplicación.";return;}
+ if(v===PIN){$("login").classList.add("hidden");$("app").classList.remove("hidden");sessionStorage.setItem("aventura_ok","1");render();}
+ else $("error").textContent="El código no es correcto. Probad otra vez.";
+});
+if(sessionStorage.getItem("aventura_ok")==="1"){$("login").classList.add("hidden");$("app").classList.remove("hidden");render();}
+if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));}
+setInterval(()=>{if(!$("app").classList.contains("hidden")&&$("detail").classList.contains("hidden"))render();},30000);
+</script>
+</body>
+</html>
