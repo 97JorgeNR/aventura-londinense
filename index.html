@@ -211,6 +211,7 @@ function updateCalendar(){
 }
   function render(){
    updateCalendar();
+   if($("missionText").dataset.mode==="route") updateSideMissions();
  const now=londonNow(), list=activities.filter(a=>!["pub","pizza"].includes(a.id)&&(["salida","parking","flight","gatwick","passport"].includes(a.id)||now>=unlock(a.start))&&now<expiry(a.start));
  $("activities").innerHTML="";
  list.forEach(a=>{
