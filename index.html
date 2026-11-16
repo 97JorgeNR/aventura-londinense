@@ -44,6 +44,14 @@ button:disabled{opacity:.4}
 .mission-buttons{display:grid;grid-template-columns:1fr;gap:10px}
 .note{font-size:12px;color:var(--suave);line-height:1.5}
 @media(min-width:600px){.grid{grid-template-columns:1fr 1fr}.activity{min-height:112px}}
+.day-number{
+  font-size:30px;
+  font-weight:700;
+  color:#d6b56d;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
 </style>
 </head>
 <body>
@@ -72,14 +80,14 @@ button:disabled{opacity:.4}
 <h2 class="section-title">Nuestro calendario</h2>
 <div class="grid">
 <article class="activity" id="day30">
-<div class="art">🇬🇧</div>
+<div class="art day-number">30</div>
 <div class="info">
 <div class="time">30 DICIEMBRE</div>
 <h3>¡Empieza la aventura!</h3>
 <p>Día desbloqueado · Toca para entrar</p>
 </div>
 </article>
-<article class="activity" data-date="2026-12-31T00:00:00Z">
+<article class="activity" data-date="2026-12-31T00:00:00Z" data-number="31">
 <div class="art">🔒</div>
 <div class="info">
 <div class="time">31 DICIEMBRE</div>
@@ -87,7 +95,7 @@ button:disabled{opacity:.4}
 <p>Se desbloquea el 31 a las 00:00</p>
 </div>
 </article>
-<article class="activity" data-date="2027-01-01T00:00:00Z">
+<article class="activity" data-date="2027-01-01T00:00:00Z" data-number="1">
 <div class="art">🔒</div>
 <div class="info">
 <div class="time">1 ENERO</div>
@@ -95,7 +103,7 @@ button:disabled{opacity:.4}
 <p>Se desbloquea el día 1 a las 00:00</p>
 </div>
 </article>
-<article class="activity" data-date="2027-01-02T00:00:00Z">
+<article class="activity" data-date="2027-01-02T00:00:00Z" data-number="2">
 <div class="art">🔒</div>
 <div class="info">
 <div class="time">2 ENERO</div>
@@ -103,7 +111,7 @@ button:disabled{opacity:.4}
 <p>Se desbloquea el día 2 a las 00:00</p>
 </div>
 </article>
-<article class="activity" data-date="2027-01-03T00:00:00Z">
+<article class="activity" data-date="2027-01-03T00:00:00Z" data-number="3">
 <div class="art">🔒</div>
 <div class="info">
 <div class="time">3 ENERO</div>
@@ -114,7 +122,8 @@ button:disabled{opacity:.4}
 </div>
 </section>
 <div id="announcement" class="banner hidden">✦ ¡NUEVA MISIÓN DESBLOQUEADA! ✦</div>
-<h2 id="travelTitle" class="section-title hidden">Nuestro viaje</h2>
+<button id="backCalendar" class="secondary hidden">← VOLVER AL CALENDARIO</button>
+ <h2 id="travelTitle" class="section-title hidden">Nuestro viaje</h2>
 <div id="activities" class="grid hidden"></div>
 <div id="missions" class="hidden">
 <h2 class="section-title">La misión de la tarde</h2>
@@ -167,8 +176,9 @@ function updateCalendar(){
   const description=card.querySelector(".info p");
 
   if(unlocked){
-   art.textContent="🔓";
-   description.textContent="¡Día desbloqueado! · Itinerario próximamente";
+   art.textContent=card.dataset.number;
+   art.classList.add("day-number");
+   description.textContent="¡Día desbloqueado!";
   }
  });
 }
@@ -197,7 +207,19 @@ $("day30").addEventListener("click",()=>{
  $("calendar").classList.add("hidden");
  $("travelTitle").classList.remove("hidden");
  $("activities").classList.remove("hidden");
+ $("missions").classList.add("hidden");
+ $("detail").classList.add("hidden");
+ $("backCalendar").classList.remove("hidden");
  render();
+});
+
+$("backCalendar").addEventListener("click",()=>{
+ $("calendar").classList.remove("hidden");
+ $("travelTitle").classList.add("hidden");
+ $("activities").classList.add("hidden");
+ $("missions").classList.add("hidden");
+ $("detail").classList.add("hidden");
+ $("backCalendar").classList.add("hidden");
 });
  $("back").addEventListener("click",()=>{$("detail").classList.add("hidden");$("activities").classList.remove("hidden");render();});
 $("m1").addEventListener("click",()=>{$("missionText").textContent="¡NO SOY COBARDE Y HAGO LA MISIÓN 2! 😄 ¡Vamos allá!";});
