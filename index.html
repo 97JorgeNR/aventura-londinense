@@ -68,9 +68,54 @@ button:disabled{opacity:.4}
 <p class="intro">Cada etapa se irá desbloqueando a medida que avance el día. Tocad una tarjeta para descubrir sus detalles.</p>
 <div class="small">La aplicación está preparada para funcionar sin conexión una vez instalada y abierta con internet.</div>
 </div>
+ <section id="calendar">
+<h2 class="section-title">Nuestro calendario</h2>
+<div class="grid">
+<article class="activity" id="day30">
+<div class="art">🇬🇧</div>
+<div class="info">
+<div class="time">30 DICIEMBRE</div>
+<h3>¡Empieza la aventura!</h3>
+<p>Día desbloqueado · Toca para entrar</p>
+</div>
+</article>
+<article class="activity" data-date="2026-12-31T00:00:00Z">
+<div class="art">🔒</div>
+<div class="info">
+<div class="time">31 DICIEMBRE</div>
+<h3>Próxima jornada</h3>
+<p>Se desbloquea el 31 a las 00:00</p>
+</div>
+</article>
+<article class="activity" data-date="2027-01-01T00:00:00Z">
+<div class="art">🔒</div>
+<div class="info">
+<div class="time">1 ENERO</div>
+<h3>Una nueva aventura</h3>
+<p>Se desbloquea el día 1 a las 00:00</p>
+</div>
+</article>
+<article class="activity" data-date="2027-01-02T00:00:00Z">
+<div class="art">🔒</div>
+<div class="info">
+<div class="time">2 ENERO</div>
+<h3>Seguimos descubriendo</h3>
+<p>Se desbloquea el día 2 a las 00:00</p>
+</div>
+</article>
+<article class="activity" data-date="2027-01-03T00:00:00Z">
+<div class="art">🔒</div>
+<div class="info">
+<div class="time">3 ENERO</div>
+<h3>Último día de aventura</h3>
+<p>Se desbloquea el día 3 a las 00:00</p>
+</div>
+</article>
+</div>
+</section>
 <div id="announcement" class="banner hidden">✦ ¡NUEVA MISIÓN DESBLOQUEADA! ✦</div>
-<h2 class="section-title">Nuestro viaje</h2>
-<div id="activities" class="grid"></div>
+<h2 id="travelTitle" class="section-title hidden">Nuestro viaje</h2>
+<div id="activities" class="grid hidden"></div>
 <div id="missions" class="hidden">
 <h2 class="section-title">La misión de la tarde</h2>
 <div class="panel">
@@ -115,7 +160,20 @@ const unlock=t=>new Date(t).getTime()-3600000;
 const expiry=t=>new Date(t).getTime()+14400000;
 let current=null;
 function londonNow(){return Date.now();} // Los horarios están guardados en UTC: Londres está en GMT el 30/12/2026.
-function render(){
+function updateCalendar(){
+ document.querySelectorAll("#calendar [data-date]").forEach(card=>{
+  const unlocked=Date.now()>=new Date(card.dataset.date).getTime();
+  const art=card.querySelector(".art");
+  const description=card.querySelector(".info p");
+
+  if(unlocked){
+   art.textContent="🔓";
+   description.textContent="¡Día desbloqueado! · Itinerario próximamente";
+  }
+ });
+}
+ function render(){
+   updateCalendar();
  const now=londonNow(), list=activities.filter(a=>(["salida","parking","flight","gatwick","passport"].includes(a.id)||now>=unlock(a.start))&&now<expiry(a.start));
  $("activities").innerHTML="";
  list.forEach(a=>{
@@ -135,7 +193,13 @@ function showDetail(a){
  $("detail").classList.remove("hidden");
  $("detailContent").innerHTML=`<div class="detail-top"><div class="detail-emoji">${a.emoji}</div><div><div class="time">${a.time} · LONDRES</div><h2 style="font-weight:400;margin:4px 0">${a.title}</h2></div></div><p>${a.desc}</p><h3 class="gold" style="font-family:Georgia,serif;font-weight:400">Indicaciones</h3><div class="route">${a.directions.map(x=>`<div>${x}</div>`).join("")}</div><p class="note">Las indicaciones se guardan en esta aplicación y pueden consultarse sin conexión. Para mapas en directo o navegación paso a paso sí necesitaréis conexión.</p>`;
 }
-$("back").addEventListener("click",()=>{$("detail").classList.add("hidden");$("activities").classList.remove("hidden");render();});
+$("day30").addEventListener("click",()=>{
+ $("calendar").classList.add("hidden");
+ $("travelTitle").classList.remove("hidden");
+ $("activities").classList.remove("hidden");
+ render();
+});
+ $("back").addEventListener("click",()=>{$("detail").classList.add("hidden");$("activities").classList.remove("hidden");render();});
 $("m1").addEventListener("click",()=>{$("missionText").textContent="¡NO SOY COBARDE Y HAGO LA MISIÓN 2! 😄 ¡Vamos allá!";});
 $("m2").addEventListener("click",()=>{$("missionText").innerHTML="<strong>Ruta:</strong> Chinatown → Leicester Square → Piccadilly Circus → Regent Street → Carnaby Street → Soho. ¡A disfrutar de Londres!";});
 $("enter").addEventListener("click",()=>{
