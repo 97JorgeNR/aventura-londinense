@@ -212,13 +212,14 @@ function updateCalendar(){
   function render(){
    updateCalendar();
    if($("missionText").dataset.mode==="route") updateSideMissions();
- const now=londonNow(), list=activities.filter(a=>!["pub","pizza"].includes(a.id)&&(["salida","parking","flight","gatwick","passport"].includes(a.id)||now>=unlock(a.start))&&now<expiry(a.start));
+ const now=londonNow(), list=activities.filter(a=>!["pub","pizza"].includes(a.id)&&now<expiry(a.start));
  $("activities").innerHTML="";
  list.forEach(a=>{
   const el=document.createElement("article");el.className="activity";
-  el.innerHTML=`<div class="art">${a.emoji}</div><div class="info"><div class="time">${a.time} · LONDRES</div><h3>${a.title}</h3><p>${a.short}</p></div>`;
-  el.addEventListener("click",()=>showDetail(a));$("activities").appendChild(el);
- });
+  const locked=now<unlock(a.start);
+el.innerHTML=`<div class="art">${locked?"🔒":a.emoji}</div><div class="info"><div class="time">${a.time} · LONDRES</div><h3>${a.title}</h3><p>${locked?"Se desbloquea una hora antes":a.short}</p></div>`;
+if(!locked) el.addEventListener("click",()=>showDetail(a));
+$("activities").appendChild(el);
  const mission=activities.find(a=>a.id==="mission");
  $("missions").classList.toggle("hidden",!(now>=unlock(mission.start)&&now<expiry(mission.start)));
  if(!list.length){$("activities").innerHTML='<div class="panel"><p class="intro">Todavía no hay actividades desbloqueadas. La próxima aparecerá automáticamente cuando llegue su hora.</p></div>';}
