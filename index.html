@@ -221,7 +221,10 @@ el.innerHTML=`<div class="art">${locked?"🔒":a.emoji}</div><div class="info"><
 if(!locked) el.addEventListener("click",()=>showDetail(a));
 $("activities").appendChild(el);
  const mission=activities.find(a=>a.id==="mission");
- $("missions").classList.toggle("hidden",!(now>=unlock(mission.start)&&now<expiry(mission.start)));
+ $("missions").classList.toggle("hidden",now>=expiry(mission.start));
+   const missionLocked=now<unlock(mission.start);
+$("m1").disabled=missionLocked;
+$("m2").disabled=missionLocked;
  if(!list.length){$("activities").innerHTML='<div class="panel"><p class="intro">Todavía no hay actividades desbloqueadas. La próxima aparecerá automáticamente cuando llegue su hora.</p></div>';}
  const newly=list.filter(a=>!sessionStorage.getItem("seen_"+a.id));
  if(newly.length){$("announcement").classList.remove("hidden");newly.forEach(a=>sessionStorage.setItem("seen_"+a.id,"1"));}
