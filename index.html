@@ -183,9 +183,35 @@ function updateCalendar(){
   }
  });
 }
- function render(){
+ function updateSideMissions(){
+ const box=$("sideMissions");
+ box.innerHTML="";
+
+ ["pub","pizza"].forEach(id=>{
+  const a=activities.find(x=>x.id===id);
+  const locked=londonNow()<unlock(a.start);
+
+  const el=document.createElement("article");
+  el.className="activity";
+
+  el.innerHTML=`
+   <div class="art">${locked?"🔒":a.emoji}</div>
+   <div class="info">
+    <div class="time">${a.time} · LONDRES</div>
+    <h3>${a.title}</h3>
+    <p>${locked?"Se desbloqueará próximamente":a.short}</p>
+   </div>`;
+
+  if(!locked){
+   el.addEventListener("click",()=>showDetail(a));
+  }
+
+  box.appendChild(el);
+ });
+}
+  function render(){
    updateCalendar();
- const now=londonNow(), list=activities.filter(a=>(["salida","parking","flight","gatwick","passport"].includes(a.id)||now>=unlock(a.start))&&now<expiry(a.start));
+ const now=londonNow(), list=activities.filter(a=>!["pub","pizza"].includes(a.id)&&(["salida","parking","flight","gatwick","passport"].includes(a.id)||now>=unlock(a.start))&&now<expiry(a.start));
  $("activities").innerHTML="";
  list.forEach(a=>{
   const el=document.createElement("article");el.className="activity";
@@ -200,9 +226,22 @@ function updateCalendar(){
  else $("announcement").classList.add("hidden");
 }
 function showDetail(a){
- current=a;$("activities").classList.add("hidden");$("missions").classList.add("hidden");$("announcement").classList.add("hidden");
+ current=a;
+ $("activities").classList.add("hidden");
+ $("missions").classList.add("hidden");
+ $("announcement").classList.add("hidden");
  $("detail").classList.remove("hidden");
- $("detailContent").innerHTML=`<div class="detail-top"><div class="detail-emoji">${a.emoji}</div><div><div class="time">${a.time} · LONDRES</div><h2 style="font-weight:400;margin:4px 0">${a.title}</h2></div></div><p>${a.desc}</p><h3 class="gold" style="font-family:Georgia,serif;font-weight:400">Indicaciones</h3><div class="route">${a.directions.map(x=>`<div>${x}</div>`).join("")}</div><p class="note">Las indicaciones se guardan en esta aplicación y pueden consultarse sin conexión. Para mapas en directo o navegación paso a paso sí necesitaréis conexión.</p>`;
+
+ $("detailContent").innerHTML=`
+  <div class="detail-top">
+   <div class="detail-emoji">${a.emoji}</div>
+   <div>
+    <div class="time">${a.time} · LONDRES</div>
+    <h2 style="font-weight:400;margin:4px 0">${a.title}</h2>
+   </div>
+  </div>
+  <p>${a.desc}</p>
+ `;
 }
 $("day30").addEventListener("click",()=>{
  $("calendar").classList.add("hidden");
@@ -224,7 +263,11 @@ $("backCalendar").addEventListener("click",()=>{
 });
  $("back").addEventListener("click",()=>{$("detail").classList.add("hidden");$("activities").classList.remove("hidden");render();});
 $("m1").addEventListener("click",()=>{$("missionText").textContent="¡NO SOY COBARDE Y HAGO LA MISIÓN 2! 😄 ¡Vamos allá!";});
-$("m2").addEventListener("click",()=>{$("missionText").innerHTML="<strong>Ruta:</strong> Chinatown → Leicester Square → Piccadilly Circus → Regent Street → Carnaby Street → Soho. ¡A disfrutar de Londres!";});
+$("m2").addEventListener("click",()=>{
+ $("missionText").dataset.mode="route";
+ $("missionText").innerHTML="<strong>Ruta:</strong> Chinatown → Leicester Square → Piccadilly Circus → Regent Street → Carnaby Street → Soho. ¡A disfrutar de Londres!";
+ updateSideMissions();
+});
 $("enter").addEventListener("click",()=>{
  const v=$("pin").value;
  if(PIN==="CAMBIAR_POR_VUESTRO_PIN"){ $("error").textContent="Falta configurar el PIN en el archivo de la aplicación.";return;}
