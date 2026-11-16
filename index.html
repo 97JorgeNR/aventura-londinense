@@ -198,7 +198,6 @@ function updateCalendar(){
    <div class="art">${locked?"🔒":a.emoji}</div>
    <div class="info">
     <div class="time">${a.time} · LONDRES</div>
-    <h3>${a.title}</h3>
     <p>${locked?"Se desbloqueará próximamente":a.short}</p>
    </div>`;
 
@@ -224,7 +223,7 @@ function render(){
     const el=document.createElement("article");
     el.className="activity";
 
-    const locked=now<unlock(a.start);
+    const locked=!["salida","parking","flight","gatwick","passport"].includes(a.id)&&now<unlock(a.start);
 
     el.innerHTML=`<div class="art">${locked?"🔒":a.emoji}</div><div class="info"><div class="time">${a.time} · LONDRES</div><h3>${a.title}</h3><p>${locked?"Se desbloquea una hora antes":a.short}</p></div>`;
 
