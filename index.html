@@ -140,7 +140,7 @@ $("m1").addEventListener("click",()=>{$("missionText").textContent="¡NO SOY COB
 $("m2").addEventListener("click",()=>{$("missionText").innerHTML="<strong>Ruta:</strong> Chinatown → Leicester Square → Piccadilly Circus → Regent Street → Carnaby Street → Soho. ¡A disfrutar de Londres!";});
 $("enter").addEventListener("click",()=>{
  const v=$("pin").value;
- if(PIN==="CAMBIAR_POR_VUESTRO_PIN"){ $("error").textContent="Falta configurar el PIN en el archivo de la aplicación.";return;}
+ if(PIN==="301226"){ $("error").textContent="Falta configurar el PIN en el archivo de la aplicación.";return;}
  if(v===PIN){$("login").classList.add("hidden");$("app").classList.remove("hidden");sessionStorage.setItem("aventura_ok","1");render();}
  else $("error").textContent="El código no es correcto. Probad otra vez.";
 });
