@@ -200,12 +200,17 @@ function londonNow(){
  return ahora.getTime();
 }
 function updateCalendar(){
+ const now=londonNow();
+
  document.querySelectorAll("#calendar [data-date]").forEach(card=>{
-  const unlocked=Date.now()>=new Date(card.dataset.date).getTime();
-  const art=card.querySelector(".art");
-  const description=card.querySelector(".info p");
+  const unlocked=now>=new Date(card.dataset.date).getTime();
+
+  card.classList.toggle("hidden",!unlocked);
 
   if(unlocked){
+   const art=card.querySelector(".art");
+   const description=card.querySelector(".info p");
+
    art.textContent=card.dataset.number;
    art.classList.add("day-number");
    description.textContent="¡Día desbloqueado!";
@@ -252,7 +257,7 @@ function render(){
     const el=document.createElement("article");
     el.className="activity";
 
-    const locked=false;
+    const locked=!["salida","parking","flight","gatwick","passport"].includes(a.id)&&now<unlock(a.start);
 const horaDesbloqueo=new Date(unlock(a.start)).toISOString().slice(11,16);
 
 el.innerHTML=`<div class="art">${locked?"🔒":a.emoji}</div><div class="info"><div class="time">${a.time} · LONDRES</div><p>${locked?"Esta misión se desbloquea a las "+horaDesbloqueo+"": "¡Ya podéis descubrir esta aventura!"}</p></div>`;
