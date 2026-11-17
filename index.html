@@ -87,13 +87,13 @@ button:disabled{opacity:.4}
 <p>Día desbloqueado · Toca para entrar</p>
 </div>
 </article>
-<article class="activity" data-date="2026-12-31T00:00:00Z" data-number="31">
-<div class="art">🔒</div>
-<div class="info">
-<div class="time">31 DICIEMBRE</div>
-<h3>Próxima jornada</h3>
-<p>Se desbloquea el 31 a las 00:00</p>
-</div>
+<article class="activity" id="day31" data-date="2026-12-31T00:00:00Z" data-number="31">
+  <div class="art">🔒</div>
+  <div class="info">
+    <div class="time">31 DICIEMBRE</div>
+    <h3>¡Nochevieja en Londres!</h3>
+    <p>Se desbloquea el 31 a las 00:00</p>
+  </div>
 </article>
 <article class="activity" data-date="2027-01-01T00:00:00Z" data-number="1">
 <div class="art">🔒</div>
@@ -164,6 +164,28 @@ const activities=[
 {id:"mission",time:"18:00",start:"2026-12-30T18:00:00Z",title:"La misión del West End",emoji:"🗺️",short:"Elige la misión y recorre el corazón de Londres.",desc:"Dos opciones para continuar la aventura. La primera es una pequeña trampa: ¡en realidad os anima a hacer la segunda!",directions:["La misión se desbloquea a las 17:00.","Las dos opciones estarán disponibles hasta las 22:00."]},
 {id:"pub",time:"20:00",start:"2026-12-30T20:00:00Z",title:"The Dog and Duck",emoji:"🍻",short:"Parada prevista sobre las 20:00.",desc:"Una parada para disfrutar del ambiente de un pub londinense tradicional.",directions:["The Dog and Duck, en Soho.","Hora aproximada: 20:00."]},
 {id:"pizza",time:"21:00",start:"2026-12-30T21:00:00Z",title:"ICCO Pizza",emoji:"🍕",short:"Cena prevista sobre las 21:00.",desc:"Terminamos el día con pizza en ICCO Pizza.",directions:["ICCO Pizza.","Hora aproximada: 21:00. ¡Buen provecho!"]}
+
+{id:"pizza",time:"21:00",start:"2026-12-30T21:00:00Z",title:"ICCO Pizza",emoji:"🍕",short:"Cena prevista sobre las 21:00.",desc:"Terminamos el día con pizza en ICCO Pizza.",directions:["ICCO Pizza.","Hora aproximada: 21:00. ¡Buen provecho!"]},
+
+{id:"tower",time:"09:00",start:"2026-12-31T09:00:00Z",title:"Torre de Londres",emoji:"🏰",short:"09:00–11:30 · Fortaleza y Joyas de la Corona.",desc:"Comenzamos el día visitando la histórica Torre de Londres y sus famosas Joyas de la Corona.",directions:["Visitar la fortaleza y las Joyas de la Corona.","Comprobad previamente la hora de vuestra entrada."]},
+
+{id:"londonbridge",time:"11:30",start:"2026-12-31T11:30:00Z",title:"London Bridge",emoji:"🌉",short:"11:30–12:15 · Cruzamos el puente.",desc:"Caminamos hacia London Bridge y lo cruzamos disfrutando de las vistas del Támesis.",directions:["Disfrutad de las vistas del río.","Haced algunas fotografías."]},
+
+{id:"riverside",time:"12:15",start:"2026-12-31T12:15:00Z",title:"Paseo por la ribera",emoji:"🚶",short:"12:15–12:45 · Paseo junto al Támesis.",desc:"Seguimos nuestro recorrido paseando por la ribera del Támesis.",directions:["Disfrutad del paseo y del ambiente junto al río."]},
+
+{id:"millennium",time:"12:45",start:"2026-12-31T12:45:00Z",title:"Millennium Bridge",emoji:"🌉",short:"12:45–13:15 · Puente y fotografías.",desc:"Cruzamos el famoso Millennium Bridge y disfrutamos de sus vistas hacia la Catedral de San Pablo.",directions:["Cruzad el puente tranquilamente.","Momento para hacer fotografías."]},
+
+{id:"stpaul",time:"13:15",start:"2026-12-31T13:15:00Z",title:"Catedral de San Pablo",emoji:"⛪",short:"13:15–13:45 · ¡Queremos ver esa cúpula!",desc:"Entramos para contemplar la impresionante cúpula desde abajo. Una visita rápida de unos 15 minutos, sin subir a las galerías.",directions:["El acceso gratuito puede depender del horario de oración y de los servicios religiosos.","Si está permitido entrar, pasamos unos 10 minutos contemplando el interior.","No subimos a las galerías de la cúpula."]},
+
+{id:"transfer",time:"13:45",start:"2026-12-31T13:45:00Z",title:"Rumbo a Hyde Park",emoji:"🚇",short:"13:45–15:00 · Traslado a Winter Wonderland.",desc:"Nos dirigimos hacia Hyde Park para disfrutar de la tarde navideña.",directions:["Comprobad la mejor combinación de transporte.","Tened preparadas las entradas."]},
+
+{id:"winter",time:"15:00",start:"2026-12-31T15:00:00Z",title:"Winter Wonderland",emoji:"🎡",short:"15:00–18:00 · ¡Diversión navideña!",desc:"Tarde de atracciones, puestos, luces, ambiente navideño y algo rico para beber o picar.",directions:["Disfrutad de las atracciones y los puestos.","Haced muchas fotos.","Recordad que algunas atracciones y consumiciones se pagan aparte."]},
+
+{id:"apartment31",time:"18:00",start:"2026-12-31T18:00:00Z",title:"Descanso en Paddington",emoji:"🏡",short:"18:00–19:30 · Volvemos al apartamento.",desc:"Regresamos al apartamento para descansar, cambiarnos y prepararnos para la noche de Nochevieja.",directions:["Tiempo para descansar.","Prepararse para salir hacia Mayfair."]},
+
+{id:"mayfairwalk",time:"Después",start:"2026-12-31T19:30:00Z",title:"Paseo por Mayfair",emoji:"✨",short:"Después del descanso · Paseo libre por Londres.",desc:"Después de descansar en el apartamento de Paddington, salimos a pasear por Mayfair y disfrutar de sus calles y escaparates iluminados. Si nos apetece, podemos continuar hacia Piccadilly Circus o Soho.",directions:["Paseamos tranquilamente por las calles de Mayfair.","Disfrutamos de las luces y el ambiente de Nochevieja.","Si nos apetece, continuamos hacia Piccadilly Circus o Soho."]}
+];
+
 ];
 const $=id=>document.getElementById(id);
 const unlock=t=>new Date(t).getTime()-3600000;
@@ -208,14 +230,14 @@ function updateCalendar(){
   box.appendChild(el);
  });
 }
-  
+let selectedDay="2026-12-30";  
 function render(){
   updateCalendar();
 
   if($("missionText").dataset.mode==="route") updateSideMissions();
 
   const now=londonNow();
-  const list=activities.filter(a=>!["pub","pizza"].includes(a.id)&&now<expiry(a.start));
+  const list=activities.filter(a=>a.start.slice(0,10)===selectedDay&&!["pub","pizza"].includes(a.id)&&now<expiry(a.start));
 
   $("activities").innerHTML="";
 
@@ -223,7 +245,7 @@ function render(){
     const el=document.createElement("article");
     el.className="activity";
 
-    const locked=!["salida","parking","flight","gatwick","passport"].includes(a.id)&&now<unlock(a.start);
+    const locked=false;
 const horaDesbloqueo=new Date(unlock(a.start)).toISOString().slice(11,16);
 
 el.innerHTML=`<div class="art">${locked?"🔒":a.emoji}</div><div class="info"><div class="time">${a.time} · LONDRES</div><p>${locked?"Esta misión se desbloquea a las "+horaDesbloqueo+"": "¡Ya podéis descubrir esta aventura!"}</p></div>`;
@@ -277,6 +299,17 @@ if(a.id==="mission"){
  `;
 }
 $("day30").addEventListener("click",()=>{
+ selectedDay="2026-12-30";
+ $("calendar").classList.add("hidden");
+ $("travelTitle").classList.remove("hidden");
+ $("activities").classList.remove("hidden");
+ $("missions").classList.add("hidden");
+ $("detail").classList.add("hidden");
+ $("backCalendar").classList.remove("hidden");
+ render();
+});
+$("day31").addEventListener("click",()=>{
+ selectedDay="2026-12-31";
  $("calendar").classList.add("hidden");
  $("travelTitle").classList.remove("hidden");
  $("activities").classList.remove("hidden");
@@ -293,7 +326,9 @@ $("backCalendar").addEventListener("click",()=>{
  $("missions").classList.add("hidden");
  $("detail").classList.add("hidden");
  $("backCalendar").classList.add("hidden");
+ selectedDay="2026-12-30";
 });
+
  $("back").addEventListener("click",()=>{$("detail").classList.add("hidden");$("activities").classList.remove("hidden");render();});
 $("m1").addEventListener("click",()=>{
  $("missionText").textContent="¡NO SOY COBARDE Y HAGO LA MISIÓN 2! 😄 ¡Vamos allá!";
