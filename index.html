@@ -130,7 +130,7 @@ button:disabled{opacity:.4}
 <div class="panel">
 <p class="intro">Ha llegado el momento de elegir cómo continúa la aventura.</p>
 <div class="mission-buttons">
-<button class="secondary" id="m1">MISIÓN 1</button>
+<button class="secondary" id="m1">RETIRADA A TIEMPO</button>
 <button id="m2">MISIÓN 2 · RUTA POR EL WEST END</button>
 </div>
 <p class="note" id="missionText"></p>
@@ -224,8 +224,9 @@ function render(){
     el.className="activity";
 
     const locked=!["salida","parking","flight","gatwick","passport"].includes(a.id)&&now<unlock(a.start);
+const horaDesbloqueo=new Date(unlock(a.start)).toISOString().slice(11,16);
 
-    el.innerHTML=`<div class="art">${locked?"🔒":a.emoji}</div><div class="info"><div class="time">${a.time} · LONDRES</div><h3>${a.title}</h3><p>${locked?"Se desbloquea una hora antes":a.short}</p></div>`;
+el.innerHTML=`<div class="art">${locked?"🔒":a.emoji}</div><div class="info"><div class="time">${a.time} · LONDRES</div><p>${locked?"Esta misión se desbloquea a las "+horaDesbloqueo+"": "¡Ya podéis descubrir esta aventura!"}</p></div>`;
 
     if(!locked) el.addEventListener("click",()=>showDetail(a));
 
@@ -233,11 +234,9 @@ function render(){
   });
 
   const mission=activities.find(a=>a.id==="mission");
-  $("missions").classList.toggle("hidden",now>=expiry(mission.start));
-
-  const missionLocked=now<unlock(mission.start);
-  $("m1").disabled=missionLocked;
-  $("m2").disabled=missionLocked;
+$("missions").classList.add("hidden");
+$("m1").disabled=false;
+$("m2").disabled=false;;
 
   if(!list.length){
     $("activities").innerHTML='<div class="panel"><p class="intro">Todavía no hay actividades desbloqueadas. La próxima aparecerá automáticamente cuando llegue su hora.</p></div>';
@@ -259,7 +258,13 @@ function showDetail(a){
  $("missions").classList.add("hidden");
  $("announcement").classList.add("hidden");
  $("detail").classList.remove("hidden");
-
+  
+if(a.id==="mission"){
+  $("activities").classList.add("hidden");
+  $("missions").classList.remove("hidden");
+  $("detail").classList.add("hidden");
+  return;
+}
  $("detailContent").innerHTML=`
   <div class="detail-top">
    <div class="detail-emoji">${a.emoji}</div>
@@ -290,7 +295,11 @@ $("backCalendar").addEventListener("click",()=>{
  $("backCalendar").classList.add("hidden");
 });
  $("back").addEventListener("click",()=>{$("detail").classList.add("hidden");$("activities").classList.remove("hidden");render();});
-$("m1").addEventListener("click",()=>{$("missionText").textContent="¡NO SOY COBARDE Y HAGO LA MISIÓN 2! 😄 ¡Vamos allá!";});
+$("m1").addEventListener("click",()=>{
+ $("missionText").textContent="¡NO SOY COBARDE Y HAGO LA MISIÓN 2! 😄 ¡Vamos allá!";
+ $("m2").click();
+});
+  
 $("m2").addEventListener("click",()=>{
  $("missionText").dataset.mode="route";
  $("missionText").innerHTML="<strong>Ruta:</strong> Chinatown → Leicester Square → Piccadilly Circus → Regent Street → Carnaby Street → Soho. ¡A disfrutar de Londres!";
