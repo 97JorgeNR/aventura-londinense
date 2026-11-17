@@ -188,7 +188,17 @@ const $=id=>document.getElementById(id);
 const unlock=t=>new Date(t).getTime()-3600000;
 const expiry=t=>new Date(t).getTime()+14400000;
 let current=null;
-function londonNow(){return Date.now();} // Los horarios están guardados en UTC: Londres está en GMT el 30/12/2026.
+function londonNow(){
+ const ahora=new Date();
+ const inicio=new Date("2026-11-18T00:00:00");
+ const fin=new Date("2026-11-19T00:00:00");
+
+ if(ahora>=inicio&&ahora<fin){
+  return ahora.getTime()+42*24*60*60*1000;
+ }
+
+ return ahora.getTime();
+}
 function updateCalendar(){
  document.querySelectorAll("#calendar [data-date]").forEach(card=>{
   const unlocked=Date.now()>=new Date(card.dataset.date).getTime();
@@ -328,13 +338,13 @@ $("backCalendar").addEventListener("click",()=>{
 
  $("back").addEventListener("click",()=>{$("detail").classList.add("hidden");$("activities").classList.remove("hidden");render();});
 $("m1").addEventListener("click",()=>{
- $("missionText").textContent="¡NO SOY COBARDE Y HAGO LA MISIÓN 2! 😄 ¡Vamos allá!";
- $("m2").click();
+ $("missionText").textContent="⚠️ ¡ATENCIÓN! ¿Seguro que queréis abandonar la aventura? Londres todavía tiene mucho que ofrecer. Si cambiáis de opinión, elegid la MISIÓN 2.";
 });
   
 $("m2").addEventListener("click",()=>{
  $("missionText").dataset.mode="route";
- $("missionText").innerHTML="<strong>Ruta:</strong> Chinatown → Leicester Square → Piccadilly Circus → Regent Street → Carnaby Street → Soho. ¡A disfrutar de Londres!";
+ $("missionText").innerHTML="<strong>¡MISIÓN 2! Ruta por el West End:</strong> Chinatown → Leicester Square → Piccadilly Circus → Regent Street → Carnaby Street → Soho. ¡A disfrutar de Londres!";
+ $("sideMissions").classList.remove("hidden");
  updateSideMissions();
 });
 $("enter").addEventListener("click",()=>{
