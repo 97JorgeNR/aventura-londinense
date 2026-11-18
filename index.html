@@ -104,7 +104,7 @@ button:disabled{opacity:.4}
 <p>Día desbloqueado · Toca para entrar</p>
 </div>
 </article>
-<article class="activity" data-date="2027-01-02T00:00:00Z" data-number="2">
+<article class="activity" id="day2" data-date="2027-01-02T00:00:00Z" data-number="2">
 <div class="art">🔒</div>
 <div class="info">
 <div class="time">2 ENERO</div>
@@ -206,7 +206,20 @@ const activities=[
 
 {id:"crown1",time:"20:15",start:"2027-01-01T20:15:00Z",title:"The Crown",emoji:"🍻",short:"20:15 · Parada opcional en un pub.",desc:"Si nos apetece, hacemos una parada en The Crown para tomar algo y descansar un rato.",directions:["Parada opcional.","Si preferimos continuar, seguimos hacia Covent Garden."]},
 
-{id:"coventgarden1",time:"20:40",start:"2027-01-01T20:40:00Z",title:"Covent Garden y cena",emoji:"🍽️",short:"20:40–21:45 · Paseo por la Piazza y cena.",desc:"Terminamos el día en Covent Garden, disfrutando de su famosa Piazza y buscando un sitio donde cenar.",directions:["Pasead por Covent Garden Piazza.","Disfrutad del ambiente y sus calles.","Buscad un sitio para cenar."]}
+{id:"coventgarden1",time:"20:40",start:"2027-01-01T20:40:00Z",title:"Covent Garden y cena",emoji:"🍽️",short:"20:40–21:45 · Paseo por la Piazza y cena.",desc:"Terminamos el día en Covent Garden, disfrutando de su famosa Piazza y buscando un sitio donde cenar.",directions:["Pasead por Covent Garden Piazza.","Disfrutad del ambiente y sus calles.","Buscad un sitio para cenar."]},
+  
+{id:"littlevenice2",time:"09:00",start:"2027-01-02T09:00:00Z",title:"Little Venice",emoji:"🛶",short:"09:00–09:45 · Paseo por Little Venice.",desc:"Comenzamos el día paseando por los canales de Little Venice.",directions:["Disfrutad de los canales y las casas flotantes.","Pasead tranquilamente junto al agua."]},
+{id:"regentswalk2",time:"09:45",start:"2027-01-02T09:45:00Z",title:"Camino hacia Regent's Park",emoji:"🚶",short:"09:45–10:15 · Camino hacia Regent's Park.",desc:"Nos dirigimos caminando hacia Regent's Park.",directions:["Disfrutad del paseo hasta el parque."]},
+{id:"regentspark2",time:"10:15",start:"2027-01-02T10:15:00Z",title:"Regent's Park",emoji:"🌳",short:"10:15–11:15 · Cruzar Regent's Park.",desc:"Atravesamos Regent's Park disfrutando de sus jardines y avenidas.",directions:["Cruzad el parque tranquilamente.","Disfrutad del entorno."]},
+{id:"camden2",time:"11:15",start:"2027-01-02T11:15:00Z",title:"Camden Town",emoji:"🛍️",short:"11:15–13:00 · Tiendas de Camden Town.",desc:"Exploramos las tiendas y el ambiente alternativo de Camden Town.",directions:["Recorred las tiendas y puestos.","Disfrutad del ambiente de Camden."]},
+{id:"lunchcamden2",time:"13:00",start:"2027-01-02T13:00:00Z",title:"Comida en Camden",emoji:"🍜",short:"13:00–14:00 · Comida en los puestos.",desc:"Paramos a comer en los puestos de comida de Camden.",directions:["Elegid algo rico entre los puestos.","Disfrutad de la comida."]},
+{id:"metroknightsbridge2",time:"14:00",start:"2027-01-02T14:00:00Z",title:"Metro hacia Knightsbridge",emoji:"🚇",short:"14:00–15:15 · Traslado hacia Knightsbridge.",desc:"Nos desplazamos en metro hacia Knightsbridge.",directions:["Dirigíos a la estación de metro.","Bajad en Knightsbridge."]},
+{id:"harrods2",time:"15:30",start:"2027-01-02T15:30:00Z",title:"Harrods",emoji:"🏬",short:"15:30–16:30 · Visita a Harrods.",desc:"Visitamos los grandes almacenes Harrods y descubrimos sus espacios más emblemáticos.",directions:["Entrad en Harrods.","Recorred sus diferentes plantas."]},
+{id:"fortnum2",time:"16:50",start:"2027-01-02T16:50:00Z",title:"Fortnum & Mason",emoji:"🫖",short:"16:50–17:20 · Visita a Fortnum & Mason.",desc:"Visitamos la histórica tienda Fortnum & Mason.",directions:["Descubrid sus productos y escaparates."]},
+{id:"minalima2",time:"17:30",start:"2027-01-02T17:30:00Z",title:"House of MinaLima",emoji:"🪄",short:"17:30–18:00 · House of MinaLima.",desc:"Visitamos House of MinaLima y su universo de diseño gráfico relacionado con el mundo mágico.",directions:["Disfrutad de sus diseños y objetos."]},
+{id:"hamleys2",time:"Desde 18:00",start:"2027-01-02T18:00:00Z",title:"Hamleys",emoji:"🧸",short:"Desde las 18:00 · Visita libre a Hamleys.",desc:"Terminamos la tarde en Hamleys, la famosa juguetería de Londres.",directions:["Recorred sus plantas y juguetes.","Disfrutad de la visita sin prisas."]},
+{id:"mysterytour2",time:"19:00",start:"2027-01-02T19:00:00Z",title:"Tour de misterios de Londres",emoji:"🔎",short:"19:00 · Tour de misterios.",desc:"Nos espera un tour para descubrir los misterios, leyendas e historias oscuras de Londres.",directions:["Reuníos en el punto de encuentro indicado por el tour.","Disfrutad de las historias y misterios de Londres."]}
+
 
 ];
 
@@ -337,6 +350,17 @@ $("day31").addEventListener("click",()=>{
 
 $("day1").addEventListener("click",()=>{
  selectedDay="2027-01-01";
+ $("calendar").classList.add("hidden");
+ $("travelTitle").classList.remove("hidden");
+ $("activities").classList.remove("hidden");
+ $("missions").classList.add("hidden");
+ $("detail").classList.add("hidden");
+ $("backCalendar").classList.remove("hidden");
+ render();
+});
+
+$("day2").addEventListener("click",()=>{
+ selectedDay="2027-01-02";
  $("calendar").classList.add("hidden");
  $("travelTitle").classList.remove("hidden");
  $("activities").classList.remove("hidden");
