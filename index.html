@@ -92,15 +92,16 @@ button:disabled{opacity:.4}
   <div class="info">
     <div class="time">31 DICIEMBRE</div>
     <h3>¡Nochevieja en Londres!</h3>
-    <p>Se desbloquea el 31 a las 00:00</p>
+    <p>Día desbloqueado · Toca para entrar</p>
   </div>
 </article>
-<article class="activity" data-date="2027-01-01T00:00:00Z" data-number="1">
+<article class="activity" id="day1" data-date="2027-01-01T00:00:00Z" data-number="1">
+  
 <div class="art">🔒</div>
 <div class="info">
 <div class="time">1 ENERO</div>
 <h3>Una nueva aventura</h3>
-<p>Se desbloquea el día 1 a las 00:00</p>
+<p>Día desbloqueado · Toca para entrar</p>
 </div>
 </article>
 <article class="activity" data-date="2027-01-02T00:00:00Z" data-number="2">
@@ -108,7 +109,7 @@ button:disabled{opacity:.4}
 <div class="info">
 <div class="time">2 ENERO</div>
 <h3>Seguimos descubriendo</h3>
-<p>Se desbloquea el día 2 a las 00:00</p>
+<p>Día desbloqueado · Toca para entrar</p>
 </div>
 </article>
 <article class="activity" data-date="2027-01-03T00:00:00Z" data-number="3">
@@ -116,7 +117,7 @@ button:disabled{opacity:.4}
 <div class="info">
 <div class="time">3 ENERO</div>
 <h3>Último día de aventura</h3>
-<p>Se desbloquea el día 3 a las 00:00</p>
+<p>Día desbloqueado · Toca para entrar</p>
 </div>
 </article>
 </div>
@@ -210,20 +211,7 @@ const activities=[
 ];
 
 const $=id=>document.getElementById(id);
-const unlock=t=>new Date(t).getTime()-3600000;
-const expiry=t=>new Date(t).getTime()+14400000;
 let current=null;
-function londonNow(){
- const ahora=new Date();
- const inicio=new Date("2026-11-18T00:00:00");
- const fin=new Date("2026-11-19T00:00:00");
-
- if(ahora>=inicio&&ahora<fin){
-  return ahora.getTime()+42*24*60*60*1000;
- }
-
- return ahora.getTime();
-}
 function updateCalendar(){
  document.querySelectorAll("#calendar [data-date]").forEach(card=>{
   card.classList.remove("hidden");
@@ -236,39 +224,37 @@ function updateCalendar(){
   description.textContent="¡Día desbloqueado!";
  });
 }
- function updateSideMissions(){
+ 
+function updateSideMissions(){
  const box=$("sideMissions");
  box.innerHTML="";
 
  ["pub","pizza"].forEach(id=>{
   const a=activities.find(x=>x.id===id);
-  const locked=false;
 
   const el=document.createElement("article");
   el.className="activity";
 
   el.innerHTML=`
-   <div class="art">${locked?"🔒":a.emoji}</div>
+   <div class="art">${a.emoji}</div>
    <div class="info">
     <div class="time">${a.time} · LONDRES</div>
-    <p>${locked?"Se desbloqueará próximamente":a.short}</p>
+    <p>${a.short}</p>
    </div>`;
 
-  if(!locked){
-   el.addEventListener("click",()=>showDetail(a));
-  }
+  el.addEventListener("click",()=>showDetail(a));
 
   box.appendChild(el);
  });
 }
+
 let selectedDay="2026-12-30";  
 function render(){
   updateCalendar();
 
   if($("missionText").dataset.mode==="route") updateSideMissions();
 
-  const now=londonNow();
-  const list=activities.filter(a=>a.start.slice(0,10)===selectedDay&&!["pub","pizza"].includes(a.id)&&now<expiry(a.start));
+  const list=activities.filter(a=>a.start.slice(0,10)===selectedDay&&!["pub","pizza"].includes(a.id));
 
   $("activities").innerHTML="";
 
@@ -277,9 +263,8 @@ function render(){
     el.className="activity";
 
     const locked=false;
-const horaDesbloqueo=new Date(unlock(a.start)).toISOString().slice(11,16);
 
-el.innerHTML=`<div class="art">${locked?"🔒":a.emoji}</div><div class="info"><div class="time">${a.time} · LONDRES</div><p>${locked?"Esta misión se desbloquea a las "+horaDesbloqueo+"": "¡Ya podéis descubrir esta aventura!"}</p></div>`;
+el.innerHTML=`<div class="art">${a.emoji}</div><div class="info"><div class="time">${a.time} · LONDRES</div><p>¡Ya podéis descubrir esta aventura!</p></div>`;
 
     if(!locked) el.addEventListener("click",()=>showDetail(a));
 
@@ -350,6 +335,17 @@ $("day31").addEventListener("click",()=>{
  render();
 });
 
+$("day1").addEventListener("click",()=>{
+ selectedDay="2027-01-01";
+ $("calendar").classList.add("hidden");
+ $("travelTitle").classList.remove("hidden");
+ $("activities").classList.remove("hidden");
+ $("missions").classList.add("hidden");
+ $("detail").classList.add("hidden");
+ $("backCalendar").classList.remove("hidden");
+ render();
+});
+
 $("backCalendar").addEventListener("click",()=>{
  $("calendar").classList.remove("hidden");
  $("travelTitle").classList.add("hidden");
@@ -379,7 +375,6 @@ $("enter").addEventListener("click",()=>{
 });
 if(sessionStorage.getItem("aventura_ok")==="1"){$("login").classList.add("hidden");$("app").classList.remove("hidden");render();}
 if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));}
-setInterval(()=>{if(!$("app").classList.contains("hidden")&&$("detail").classList.contains("hidden"))render();},30000);
 </script>
 </body>
 </html>
