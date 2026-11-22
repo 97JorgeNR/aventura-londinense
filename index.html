@@ -112,7 +112,7 @@ button:disabled{opacity:.4}
 <p>Día desbloqueado · Toca para entrar</p>
 </div>
 </article>
-<article class="activity" data-date="2027-01-03T00:00:00Z" data-number="3">
+<article class="activity" id="day3" data-date="2027-01-03T00:00:00Z" data-number="3">
 <div class="art">🔒</div>
 <div class="info">
 <div class="time">3 ENERO</div>
@@ -218,7 +218,17 @@ const activities=[
 {id:"fortnum2",time:"16:50",start:"2027-01-02T16:50:00Z",title:"Fortnum & Mason",emoji:"🫖",short:"16:50–17:20 · Visita a Fortnum & Mason.",desc:"Visitamos la histórica tienda Fortnum & Mason.",directions:["Descubrid sus productos y escaparates."]},
 {id:"minalima2",time:"17:30",start:"2027-01-02T17:30:00Z",title:"House of MinaLima",emoji:"🪄",short:"17:30–18:00 · House of MinaLima.",desc:"Visitamos House of MinaLima y su universo de diseño gráfico relacionado con el mundo mágico.",directions:["Disfrutad de sus diseños y objetos."]},
 {id:"hamleys2",time:"Desde 18:00",start:"2027-01-02T18:00:00Z",title:"Hamleys",emoji:"🧸",short:"Desde las 18:00 · Visita libre a Hamleys.",desc:"Terminamos la tarde en Hamleys, la famosa juguetería de Londres.",directions:["Recorred sus plantas y juguetes.","Disfrutad de la visita sin prisas."]},
-{id:"mysterytour2",time:"19:00",start:"2027-01-02T19:00:00Z",title:"Tour de misterios de Londres",emoji:"🔎",short:"19:00 · Tour de misterios.",desc:"Nos espera un tour para descubrir los misterios, leyendas e historias oscuras de Londres.",directions:["Reuníos en el punto de encuentro indicado por el tour.","Disfrutad de las historias y misterios de Londres."]}
+{id:"mysterytour2",time:"19:00",start:"2027-01-02T19:00:00Z",title:"Tour de misterios de Londres",emoji:"🔎",short:"19:00 · Tour de misterios.",desc:"Nos espera un tour para descubrir los misterios, leyendas e historias oscuras de Londres.",directions:["Reuníos en el punto de encuentro indicado por el tour.","Disfrutad de las historias y misterios de Londres."]},
+
+{id:"buckingham3",time:"08:00",start:"2027-01-03T08:00:00Z",title:"Buckingham Palace",emoji:"👑",short:"08:00–08:30 · Buckingham Palace.",desc:"Comenzamos nuestro último día visitando Buckingham Palace y contemplando la residencia oficial del monarca británico en Londres.",directions:["Contemplad la fachada del palacio.","Disfrutad de las fotografías de recuerdo."]},
+{id:"stjames3",time:"08:30",start:"2027-01-03T08:30:00Z",title:"St James's Park",emoji:"🌳",short:"08:30–09:00 · Paseo por St James's Park.",desc:"Paseamos por uno de los parques reales más bonitos de Londres.",directions:["Disfrutad del lago y sus jardines.","Continuad hacia Horse Guards."]},
+{id:"horseguards3",time:"09:00",start:"2027-01-03T09:00:00Z",title:"Horse Guards Parade",emoji:"🐎",short:"09:00–09:25 · Horse Guards Parade.",desc:"Visitamos la histórica plaza de desfiles y contemplamos la zona de la guardia montada.",directions:["Observad la entrada y los edificios históricos.","Haced las últimas fotografías."]},
+{id:"trafalgar3",time:"09:25",start:"2027-01-03T09:25:00Z",title:"Trafalgar Square",emoji:"🦁",short:"09:25–09:50 · Trafalgar Square.",desc:"Llegamos a Trafalgar Square para disfrutar de una de las plazas más emblemáticas de Londres.",directions:["Contemplad la columna de Nelson y sus leones.","Disfrutad del ambiente de la plaza."]},
+{id:"britishmuseum3",time:"10:00",start:"2027-01-03T10:00:00Z",title:"Museo Británico",emoji:"🏛️",short:"10:00–11:45 · Visita al Museo Británico.",desc:"Descubrimos algunas de las colecciones más importantes del Museo Británico.",directions:["Entrad al museo cuando abra.","Elegid las salas que más os interesen.","No olvidéis visitar el espectacular Great Court."]},
+{id:"lunch3",time:"11:45",start:"2027-01-03T11:45:00Z",title:"Comida",emoji:"🥪",short:"11:45–12:15 · Pausa para comer algo.",desc:"Hacemos una pausa para comer algo antes de nuestras últimas fotografías en Londres.",directions:["Tomad algo rápido y descansad un momento."]},
+{id:"kingscross3",time:"12:15",start:"2027-01-03T12:15:00Z",title:"King's Cross y St Pancras",emoji:"🚂",short:"12:15–13:00 · Últimas fotos de Londres.",desc:"Terminamos nuestra aventura con un paseo por King's Cross y St Pancras, haciendo las últimas fotografías y recuerdos del viaje.",directions:["Visitad la zona de King's Cross.","Acercaos a la fachada de St Pancras.","Haced las últimas fotografías del viaje."]},
+{id:"southend3",time:"13:00",start:"2027-01-03T13:00:00Z",title:"Camino al aeropuerto de Southend",emoji:"✈️",short:"13:00 · Traslado al aeropuerto London Southend.",desc:"Nos despedimos de Londres y nos dirigimos al aeropuerto London Southend (SEN) para tomar el vuelo de regreso.",directions:["Dirigíos hacia Liverpool Street.","Tomad el tren hacia Southend Airport.","Comprobad la terminal y los horarios del vuelo."]},
+{id:"flightback3",time:"17:15",start:"2027-01-03T17:15:00Z",title:"Vuelo de regreso",emoji:"🛫",short:"17:15 · Vuelo previsto de regreso a casa.",desc:"¡Termina nuestra aventura londinense! Nos llevamos un montón de recuerdos de estos días maravillosos.",directions:["Comprobad la puerta de embarque.","¡Buen viaje de vuelta a casa!"]}
 
 
 ];
@@ -361,6 +371,17 @@ $("day1").addEventListener("click",()=>{
 
 $("day2").addEventListener("click",()=>{
  selectedDay="2027-01-02";
+ $("calendar").classList.add("hidden");
+ $("travelTitle").classList.remove("hidden");
+ $("activities").classList.remove("hidden");
+ $("missions").classList.add("hidden");
+ $("detail").classList.add("hidden");
+ $("backCalendar").classList.remove("hidden");
+ render();
+});
+
+$("day3").addEventListener("click",()=>{
+ selectedDay="2027-01-03";
  $("calendar").classList.add("hidden");
  $("travelTitle").classList.remove("hidden");
  $("activities").classList.remove("hidden");
