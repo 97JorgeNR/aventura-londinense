@@ -100,7 +100,7 @@ button:disabled{opacity:.4}
 <div class="art">🔒</div>
 <div class="info">
 <div class="time">1 ENERO</div>
-<h3>Una nueva aventura</h3>
+<h3>Nuevo año y más por recorrer</h3>
 <p>Día desbloqueado · Toca para entrar</p>
 </div>
 </article>
@@ -108,7 +108,7 @@ button:disabled{opacity:.4}
 <div class="art">🔒</div>
 <div class="info">
 <div class="time">2 ENERO</div>
-<h3>Seguimos descubriendo</h3>
+<h3>Preparados para el lado alternativo</h3>
 <p>Día desbloqueado · Toca para entrar</p>
 </div>
 </article>
@@ -337,7 +337,13 @@ if(a.id==="mission"){
   <p>${a.desc}</p>
  `;
 }
+
 $("day30").addEventListener("click",()=>{
+ const respuesta=prompt("🐻 PRIMER ACERTIJO\n\nUn famoso oso de Londres es conocido por su abrigo azul, su sombrero rojo y su afición a los bocadillos de mermelada. ¿Cómo se llama?");
+ if(respuesta===null || respuesta.trim().toUpperCase()!=="PADDINGTON"){
+  alert("¡Esa no es la respuesta! ¡Volved a intentarlo!");
+  return;
+ }
  selectedDay="2026-12-30";
  $("calendar").classList.add("hidden");
  $("travelTitle").classList.remove("hidden");
@@ -347,7 +353,14 @@ $("day30").addEventListener("click",()=>{
  $("backCalendar").classList.remove("hidden");
  render();
 });
+
+
 $("day31").addEventListener("click",()=>{
+ const respuesta=prompt("✨ SEGUNDO ACERTIJO\n\nAyer paseamos por una de las plazas más famosas de Londres, conocida por sus enormes pantallas luminosas y sus anuncios de colores. ¿Cómo se llama?");
+ if(respuesta===null || respuesta.trim().toUpperCase()!=="PICCADILLY"){
+  alert("¡Esa no es la respuesta! ¡Volved a intentarlo!");
+  return;
+ }
  selectedDay="2026-12-31";
  $("calendar").classList.add("hidden");
  $("travelTitle").classList.remove("hidden");
@@ -359,6 +372,11 @@ $("day31").addEventListener("click",()=>{
 });
 
 $("day1").addEventListener("click",()=>{
+ const respuesta=prompt("⛪ TERCER ACERTIJO\n\nAyer estuvimos en un lugar que antiguamente era una iglesia. Tenía grandes vidrieras y ahora se ha convertido en un lugar de reunión muy diferente. ¿Qué lugar era?");
+ if(respuesta===null || respuesta.trim().toUpperCase()!=="MERCATO"){
+  alert("¡Esa no es la respuesta! ¡Volved a intentarlo!");
+  return;
+ }
  selectedDay="2027-01-01";
  $("calendar").classList.add("hidden");
  $("travelTitle").classList.remove("hidden");
@@ -370,6 +388,11 @@ $("day1").addEventListener("click",()=>{
 });
 
 $("day2").addEventListener("click",()=>{
+ const respuesta=prompt("🔔 CUARTO ACERTIJO\n\nAyer terminamos el día en una famosa plaza de Londres, decorada con motivos navideños y unas enormes campanas. Estaba llena de ambiente, tiendas y restaurantes. ¿Qué lugar era?");
+ if(respuesta===null || respuesta.trim().toUpperCase()!=="COVENT GARDEN"){
+  alert("¡Esa no es la respuesta! ¡Volved a intentarlo!");
+  return;
+ }
  selectedDay="2027-01-02";
  $("calendar").classList.add("hidden");
  $("travelTitle").classList.remove("hidden");
@@ -381,6 +404,11 @@ $("day2").addEventListener("click",()=>{
 });
 
 $("day3").addEventListener("click",()=>{
+ const respuesta=prompt("🕵️ QUINTO ACERTIJO\n\nAyer nos adentramos en una historia llena de misterio, secretos y sombras. Un nombre quedó grabado para siempre en las páginas más oscuras de Londres. ¿De quién estamos hablando?");
+ if(respuesta===null || respuesta.trim().toUpperCase()!=="JACK EL DESTRIPADOR"){
+  alert("¡Esa no es la respuesta! ¡Volved a intentarlo!");
+  return;
+ }
  selectedDay="2027-01-03";
  $("calendar").classList.add("hidden");
  $("travelTitle").classList.remove("hidden");
@@ -390,6 +418,7 @@ $("day3").addEventListener("click",()=>{
  $("backCalendar").classList.remove("hidden");
  render();
 });
+
 
 $("backCalendar").addEventListener("click",()=>{
  $("calendar").classList.remove("hidden");
